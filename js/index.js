@@ -45,13 +45,21 @@ const app = new Vue({
 
 
     methods: {
+
         getDatos(){
 
             let ciudad = this.ciudad;
-            const url_api = `https://www.datos.gov.co/resource/gt2j-8ykr.json?ciudad_de_ubicaci_n=${ciudad}`;
+            let total =0;
+           
+        const url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
             try {
                 this.$http.get(url_api).then((response)=>{
-                    this.numeroCasos = response.data.length;            
+                    for (var i = 0; i < response.data.data.length; i++) {
+                       if(response.data.data[i][10] === ciudad){
+                           total++;
+                       }
+                   } 
+                    this.numeroCasos = total;            
                 });
             } catch (error) {
                console.log(err)
@@ -66,11 +74,10 @@ const app = new Vue({
         var f = new Date();
         this.fechaActual=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
 
-        const url_api = `https://www.datos.gov.co/resource/gt2j-8ykr.json`;
+        const url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
         try {
          this.$http.get(url_api).then((response)=>{
-
-          this.totalCasos = response.data.length;            
+          this.totalCasos = response.data.data.length;            
       });
      } catch (error) {
         console.log(err)
@@ -79,11 +86,12 @@ const app = new Vue({
 
 getCiudades(){
     let ciudades = []; 
-    let url="https://www.datos.gov.co/resource/gt2j-8ykr.json";
+    let url="https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json";
     try{
         this.$http.get(url).then((response)=>{
-            for (var i = 0; i < response.data.length; i++) {
-                ciudades[i] = response.data[i].ciudad_de_ubicaci_n;
+           
+            for (var i = 0; i < response.data.data.length; i++) {
+                ciudades[i] = response.data.data[i][10];
            }  
            this.ciudades = new Set(ciudades);
            this.ciudades = Array.from(this.ciudades);
@@ -102,7 +110,6 @@ getCiudadVisitante(){
     try{
         this.$http.get(urlip).then((response)=>{
            let url_apiIP='http://geoplugin.net/json.gp?ip='+response.data.ip;
-           console.log(url_apiIP);
            this.$http.get(url_apiIP).then((responsee)=>{
             this.ciudad=responsee.data.geoplugin_city;
            });
@@ -129,19 +136,29 @@ getTotalAtencion(){
 },
 
 getAtencion(atencion, conCiudad){
-    let url_api = `https://www.datos.gov.co/resource/gt2j-8ykr.json`;
-    if(conCiudad){
-        let ciudad = this.ciudad;
-        url_api = `https://www.datos.gov.co/resource/gt2j-8ykr.json?ciudad_de_ubicaci_n=${ciudad}`;
-    }
-   
+    let url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
+
+    let numeroCasoss=0;
+    let ciudad = this.ciudad;
+
     try {
         this.$http.get(url_api).then((response)=>{
-            var numeroCasoss=0;
-            for(let i=0; i< response.data.length; i++){
-                if(response.data[i].atenci_n === atencion){
-                    numeroCasoss ++;
+
+            for(let i=0; i< response.data.data.length; i++){
+
+
+                if(response.data.data[i][12] === atencion && conCiudad){
+                    if(response.data.data[i][10] === ciudad){
+                        numeroCasoss ++;  
+                    }                               
+                }else{
+
+                    if(response.data.data[i][12] === atencion && !conCiudad){
+                            numeroCasoss ++;                                                      
+                    }
+
                 }
+
             }    
             if(atencion==="Recuperado" && !conCiudad) this.numeroRecuperados=numeroCasoss;
             if(atencion==="Casa" && !conCiudad) this.numeroCasa=numeroCasoss;
@@ -166,24 +183,34 @@ getAtencion(atencion, conCiudad){
 
 getGenero(conCiudad){
 
-    let url_api = `https://www.datos.gov.co/resource/gt2j-8ykr.json`;
-    if(conCiudad){
-        let ciudad = this.ciudad;
-        url_api = `https://www.datos.gov.co/resource/gt2j-8ykr.json?ciudad_de_ubicaci_n=${ciudad}`;
-    }
+    let url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
 
     let hombres = 0;
     let mujeres = 0;
 
+    let ciudad = this.ciudad;
+
     try {
         this.$http.get(url_api).then((response)=>{
-            for(let i=0; i< response.data.length; i++){
-                let genero = response.data[i].sexo;
+
+            for(let i=0; i< response.data.data.length; i++){
+                let genero = response.data.data[i][14];
+                let ciudadApi = response.data.data[i][10];
+
+
+              if(conCiudad){
+                if(genero === 'F' && ciudadApi === ciudad){
+                    mujeres ++;
+                    }else if(genero === 'M' && ciudadApi === ciudad){
+                        hombres ++;
+                    }
+              }else{
                 if(genero === 'F'){
-                mujeres ++;
-                }else if(genero === 'M'){
-                    hombres ++;
-                }
+                    mujeres ++;
+                    }else if(genero === 'M'){
+                        hombres ++;
+                  }
+              }
             }
           if(conCiudad){
             this.totalHombresCiudad = hombres;
