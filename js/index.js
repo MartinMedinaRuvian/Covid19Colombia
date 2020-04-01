@@ -86,6 +86,8 @@ getCiudades(){
                 ciudades[i] = response.data[i].ciudad_de_ubicaci_n;
            }  
            this.ciudades = new Set(ciudades);
+           this.ciudades = Array.from(this.ciudades);
+           this.ciudades.sort();
        });
     }catch(error){
         console.log(error)
