@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="js/vue.js"></script>
+    <script src="js/vue-resource.min.js"></script>
+    <title>Covid19 Colombia</title>
+</head>
+
+
+<body class="bg-primary">
+
+    <div id="app" class="container">
+
+<div class="row">
+
+    <div class="col-sm-6 mt-5">
+
+    
+   <div class="card">
+       
+    <div class="card-header">
+        <h4 class="text-center mt-4">{{titulo}}  <span><img src="img/bandera_colombia.png" width="20px" height="20px"></span></h4>
+       <p><a href="https://www.datos.gov.co/resource/gt2j-8ykr.json" target="_blank">Información obtenida por API publica de datos abiertos de Colombia</a>  </p>
+    </div>
+
+       <div class="card-body">
+        <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> Hoy {{fechaActual}} hay un total de <b>{{totalCasos}}</b> casos reportados en todo el país. </button>
+ 
+           <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{numeroRecuperados}}</b> Recuperados.</button>
+           <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{recuperadosHospital}}</b> Recuperados en hospital.</button>
+           <button type="button" class="btn btn-danger btn-sm btn-block disabled"><i class="fa fa-plus"></i> <b>{{numeroFallecidos}}</b> Fallecidos.</button>
+           <button type="button" class="btn btn-primary btn-sm btn-block disabled"><i class="fa fa-home"></i> <b>{{numeroCasa}}</b> Recuperandosen en casa.</button>
+           <button type="button" class="btn btn-info btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{numeroHospitales}}</b> Recuperandosen Hospitales.</button>
+           <button type="button" class="btn btn-warning btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{numeroHospitalesU}}</b> En UCI [Unidad Cuidados Intensivos]</button>
+           <button type="button" class="btn btn-dark btn-sm btn-block disabled"><i class="fa fa-male"></i> <b>{{hombres}}</b> hombres y <i class="fa fa-female"></i> <b>{{mujeres}}</b> mujeres.</button>
+         
+        </div>
+
+    </div>
+
+    </div>
+
+
+    
+
+    <div class="col-sm-6 mt-5">
+
+        <div class="card">
+            <div class="card-header text-center">
+               <h4>Información por ciudad</h4>
+            </div>
+    
+            <div class="card-body mt-2"> 
+
+                <div class="form-group">
+                    <h5 class="text-center">Seleccione la ciudad a consultar:</h5>
+        
+                    <select class="form-control" id="ciudad" name="ciudad" v-model="ciudad" :onchange="getDatos()">
+                        <option  v-for="ciudad of ciudades" v-bind:value="ciudad">{{ciudad}}</option>
+                      </select>
+                </div>
+
+                <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> Hay un total de <b>{{numeroCasos}} casos</b> en {{ciudad}}. </button>
+                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{numeroRecuperadosCiudad}}</b> Recuperados.</button>
+                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{recuperadosHospitalCiudad}}</b> Recuperados en hospital.</button>
+           <button type="button" class="btn btn-danger btn-sm btn-block disabled"><i class="fa fa-plus"></i> <b>{{numeroFallecidosCiudad}}</b> Fallecidos.</button>
+           <button type="button" class="btn btn-primary btn-sm btn-block disabled"><i class="fa fa-home"></i> <b>{{numeroCasaCiudad}}</b> Recuperandosen en casa.</button>
+           <button type="button" class="btn btn-info btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{numeroHospitalesCiudad}}</b> Recuperandosen Hospitales.</button>
+           <button type="button" class="btn btn-warning btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{numeroHospitalesU_ciudad}}</b> En UCI [Unidad Cuidados Intensivos]</button>
+           <button type="button" class="btn btn-dark btn-sm btn-block disabled"><i class="fa fa-male"></i> <b>{{totalHombresCiudad}}</b> hombres y <i class="fa fa-female"></i> <b>{{totalMujeresCiudad}}</b> mujeres.</button>
+           
+        </div>
+
+        </div>
+       
+    </div>
+
+
+</div>
+
+<div class="text-center container mt-5 mb-5 text-white">
+<h5>2020. Martin Medina Ruvian - Yorgen Galvis</h5>
+</div>
+
+
+    </div>
+    <script src="js/index.js"></script>
+</body>
+</html>
