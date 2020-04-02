@@ -9,6 +9,8 @@ const app = new Vue({
         this.getCiudadVisitante();
         this.getGenero(false);
         this.getGenero(true);
+        this.llenarEdades();
+        this.getTotalEdad();
     },
 
     data:{
@@ -38,7 +40,18 @@ const app = new Vue({
         totalHombresCiudad:0,
         totalMujeresCiudad:0,
         recuperadosHospital : 0,
-        recuperadosHospitalCiudad : 0
+        recuperadosHospitalCiudad : 0,
+        edades:[],
+        edad:23,
+        totalEdad: 0,
+        edadRecuperados:0,       
+        edadRecuperadosHospital:0,       
+        edadCasa:0,
+        edadHospitales:0,
+        edadHospitalesU:0,
+        edadFallecidos:0,
+        edadHombres:0,
+        edadMujeres:0
 
     },
 
@@ -226,8 +239,120 @@ getGenero(conCiudad){
     } catch (error) {
        console.log(err)
    }
-}
+},
 
+llenarEdades(){
+    for(let i= 1; i < 100; i++){
+        this.edades.push(i);
+    }
+},
+
+getTotalEdad(){
+
+    let url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
+    let total = 0;
+
+    let edad = this.edad;
+
+    try {
+        this.$http.get(url_api).then((response)=>{
+
+            for(let i=0; i< response.data.data.length; i++){
+            let edadApi = response.data.data[i][13];
+                if(edadApi == edad){
+                    total ++;
+                }
+            }
+           this.totalEdad = total;
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    this.getTotalEdadyAtencion();
+},
+
+getTotalEdadyAtencion(){
+    this.getEdadyAtencion('Recuperado');
+    this.getEdadyAtencion('Casa');
+    this.getEdadyAtencion('Hospital');
+    this.getEdadyAtencion('Hospital UCI');
+    this.getEdadyAtencion('Fallecido');
+    this.getEdadyAtencion('Recuperado (Hospital)');
+    this.getGeneroEdad();
+},
+
+
+getEdadyAtencion(atencion){
+  
+    let url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
+    let numeroCasoss = 0;
+ 
+
+
+    let edad = this.edad;
+
+    try {
+        this.$http.get(url_api).then((response)=>{
+
+            for(let i=0; i< response.data.data.length; i++){
+            let edadApi = response.data.data[i][13];
+            let atencionApi = response.data.data[i][12];
+            if(atencionApi===atencion && edadApi == edad){
+                numeroCasoss ++
+            } 
+            }
+
+            if(atencion==="Recuperado") this.edadRecuperados=numeroCasoss;
+            if(atencion==="Casa") this.edadCasa=numeroCasoss;
+            if(atencion==="Hospital") this.edadHospitales=numeroCasoss;
+            if(atencion==="Hospital UCI") this.edadHospitalesU=numeroCasoss;
+            if(atencion==="Fallecido") this.edadFallecidos=numeroCasoss;
+            if(atencion==="Recuperado (Hospital)") this.edadRecuperadosHospital=numeroCasoss;
+          
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+getGeneroEdad(){
+
+    let url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
+
+    let hombres = 0;
+    let mujeres = 0;
+
+    let edad = this.edad;
+
+    try {
+        this.$http.get(url_api).then((response)=>{
+
+            for(let i=0; i< response.data.data.length; i++){
+                let genero = response.data.data[i][14];
+                let edadApi = response.data.data[i][13];
+                
+                if(genero === 'F' && edadApi == edad){
+                    mujeres ++;
+                    }else if(genero === 'M' && edadApi == edad){
+                        hombres ++;
+                    }
+              
+            }
+    
+            this.edadHombres = hombres;
+            this.edadMujeres = mujeres;
+
+              
+        });
+        
+      
+    } catch (error) {
+       console.log(err)
+   }
+}
 
 
 },
