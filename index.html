@@ -80,11 +80,50 @@
     </div>
 
 
+
+    <div class="col-sm-6 mt-5">
+
+        <div class="card">
+            <div class="card-header text-center">
+               <h4>Información por edad</h4>
+            </div>
+    
+            <div class="card-body mt-2"> 
+
+                <div class="form-group">
+                    <h5 class="text-center">Seleccione la edad a consultar:</h5>
+        
+                    <select class="form-control" id="edad" name="edad" v-model="edad" :onchange="getTotalEdad()">
+                        <option  v-for="edad of edades" v-bind:value="edad">{{edad}}  años</option> 
+                      </select>
+                     
+                </div>
+
+                <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> Hay un total de <b>{{totalEdad}}</b> casos con <b>{{edad}}</b> años. </button>
+                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{edadRecuperados}}</b> Recuperados.</button>
+                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{edadRecuperadosHospital}}</b> Recuperados en hospital.</button>
+           <button type="button" class="btn btn-danger btn-sm btn-block disabled"><i class="fa fa-plus"></i> <b>{{edadFallecidos}}</b> Fallecidos.</button>
+           <button type="button" class="btn btn-primary btn-sm btn-block disabled"><i class="fa fa-home"></i> <b>{{edadCasa}}</b> Recuperandosen en casa.</button>
+           <button type="button" class="btn btn-info btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{edadHospitales}}</b> Recuperandosen Hospitales.</button>
+           <button type="button" class="btn btn-warning btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{edadHospitalesU}}</b> En UCI [Unidad Cuidados Intensivos]</button>
+           <button type="button" class="btn btn-dark btn-sm btn-block disabled"><i class="fa fa-male"></i> <b>{{edadHombres}}</b> hombres y <i class="fa fa-female"></i> <b>{{edadMujeres}}</b> mujeres.</button>
+           
+        </div>
+
+        </div>
+       
+    </div>
+
+
+</div>
+
+<div class="container text-center text-white mt-5">
+    <p>Enlaces de interés:</p>
+   <h5> <a href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VS/ED/VSP/coronavirus-telefonos.pdf" class="text-white">Lineas telefónicas - Secretarias de Salud</a> </h5>
 </div>
 
 <div class="text-center container mt-5 mb-5 text-white">
-    <strong><a href="https://twitter.com/hashtag/SosCucutaSeAsfixia"><img src="https://cdn.icon-icons.com/icons2/1183/PNG/512/1490133460-social-icons01_82210.png" witdh="16" height="16" />#SOSCúcutaSeAsfixia</a></strong>
-<h5>&copy;2020. Martin Medina Ruvian - Yorgen Galvis</h5>
+<h5>2020. Martin Medina - Yorgen Galvis</h5>
 </div>
 
 
