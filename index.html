@@ -118,17 +118,17 @@
 
         <div class="card">
             <div class="card-header text-center">
-               <h4>Filtro por tipo de contagio en:  <b>{{ciudad}}</b></h4>
+               <h4>Filtro por medio de contagio en:  <b>{{ciudad}}</b></h4>
             </div>
         <div class="card-body mt-2"> 
           <div class="form-group">
-                    <h5 class="text-center">Seleccione el tipo de contagio:</h5>
+                    <h5 class="text-center">Seleccione el medio de contagio:</h5>
                 <select class="form-control" id="tcontagio" name="tcontagio" v-model="tcontagio" :onchange="getDatosContagio()">
                         <option  v-for="tcontagio of tiposContagio" v-bind:value="tcontagio">{{tcontagio}}</option> 
                       </select>
                      
                 </div>
-                <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> Hay un total de <b>{{totalCu}}</b> contagios por el tipo <b>{{tcontagio}}</b> en la ciudad</button>
+                <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> Hay un total de <b>{{totalCu}}</b> contagios por el medio <b>{{tcontagio}}</b> en la ciudad</button>
                 Se clasifican asi:
                 <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{cantR}}</b> Recuperados.</button>
                 <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{canRhospital}}</b> Recuperados en hospital.</button>
