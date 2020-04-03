@@ -11,6 +11,8 @@ const app = new Vue({
         this.getGenero(true);
         this.llenarEdades();
         this.getTotalEdad();
+        this.getTiposdeContagio();
+        //this.getDatosContagio();
     },
 
     data:{
@@ -51,8 +53,12 @@ const app = new Vue({
         edadHospitalesU:0,
         edadFallecidos:0,
         edadHombres:0,
-        edadMujeres:0
-
+        edadMujeres:0,
+        //Version 1.3
+        tiposContagio:[],
+        tcontagio:"Importado",
+        totalCu:0,
+        canMConta:0,canEnHospitala:0,canHConta:0,canRhospital:0,canRcasa:0,canFa:0,cantR:0,canUCI:0
     },
 
 
@@ -113,9 +119,39 @@ getCiudades(){
     }catch(error){
         console.log(error)
     }
+},
 
-    for (let item of this.ciudades) console.log(item);
-
+getDatosContagio(){
+let url="https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json";
+    try{
+        this.$http.get(url).then((response)=>{
+           let totalCout=0;let canEnHospital=0;let canMConta1=0;var canHConta1=0;var canRhospital1=0;var canRcasa1=0;var canFa1=0;var cantR1=0;var canUCI1=0;
+            for (var i = 0; i < response.data.data.length; i++) {
+                if(response.data.data[i][15]==this.tcontagio){
+                    if(response.data.data[i][15]==this.tcontagio && response.data.data[i][10]===this.ciudad)totalCout++;
+                    if(response.data.data[i][12]==="Recuperado" && response.data.data[i][10]===this.ciudad) cantR1++;
+                    if(response.data.data[i][12]==="Casa" && response.data.data[i][10]===this.ciudad) canRcasa1++;
+                    if(response.data.data[i][12]==="Hospital" && response.data.data[i][10]===this.ciudad)canEnHospital++;
+                    if(response.data.data[i][12]==="Hospital UCI" && response.data.data[i][10]===this.ciudad)canUCI1++;
+                    if(response.data.data[i][12]==="Fallecido" && response.data.data[i][10]===this.ciudad)canFa1++;
+                    if(response.data.data[i][12]==="Recuperado (Hospital)" && response.data.data[i][10]===this.ciudad)canRhospital1++;
+                    if(response.data.data[i][14] === "M" && response.data.data[i][10]===this.ciudad) canHConta1++;
+                    if(response.data.data[i][14] === "F" && response.data.data[i][10]===this.ciudad) canMConta1++;
+                }
+           }  
+           this.canEnHospitala=canEnHospital;
+           this.totalCu=totalCout;
+           this.canMConta=canMConta1;
+           this.canHConta=canHConta1;
+           this.canRhospital=canRhospital1;
+           this.canRcasa=canRcasa1;
+           this.canFa=canFa1;
+           this.cantR=cantR1;
+           this.canUCI=canUCI1;
+       });
+    }catch(error){
+        console.log(error)
+    }
 },
 
 getCiudadVisitante(){
@@ -194,6 +230,22 @@ getAtencion(atencion, conCiudad){
    }
 },
 
+getTiposdeContagio(){
+let contagios = []; 
+    let url="https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json";
+    try{
+        this.$http.get(url).then((response)=>{
+            for (var i = 0; i < response.data.data.length; i++) {
+                contagios[i] = response.data.data[i][15];
+           }  
+           this.tiposContagio = new Set(contagios);
+           this.tiposContagio= Array.from(this.tiposContagio);
+           this.tiposContagio.sort();
+       });
+    }catch(error){
+        console.log(error)
+    }
+},
 getGenero(conCiudad){
 
     let url_api = `https://www.datos.gov.co/api/views/gt2j-8ykr/rows.json`;
