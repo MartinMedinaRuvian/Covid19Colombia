@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -60,7 +59,7 @@
                 <div class="form-group">
                     <h5 class="text-center">Seleccione la ciudad a consultar:</h5>
         
-                    <select class="form-control" id="ciudad" name="ciudad" v-model="ciudad" :onchange="getDatos()">
+                    <select class="form-control" id="ciudad" name="ciudad" v-model="ciudad" :onchange="getTotalCasosCiudad()">
                         <option  v-for="ciudad of ciudades" v-bind:value="ciudad">{{ciudad}}</option>
                       </select>
                 </div>
@@ -100,9 +99,9 @@
                      
                 </div>
 
-                <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> Hay un total de <b>{{totalEdad}}</b> casos con <b>{{edad}}</b> años. </button>
-                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{edadRecuperados}}</b> Recuperados.</button>
-                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{edadRecuperadosHospital}}</b> Recuperados en hospital.</button>
+            <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> Hay un total de <b>{{totalEdad}}</b> casos con <b>{{edad}}</b> años. </button>
+            <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{edadRecuperados}}</b> Recuperados.</button>
+            <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{edadRecuperadosHospital}}</b> Recuperados en hospital.</button>
            <button type="button" class="btn btn-danger btn-sm btn-block disabled"><i class="fa fa-plus"></i> <b>{{edadFallecidos}}</b> Fallecidos.</button>
            <button type="button" class="btn btn-primary btn-sm btn-block disabled"><i class="fa fa-home"></i> <b>{{edadCasa}}</b> Recuperandose en casa.</button>
            <button type="button" class="btn btn-info btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{edadHospitales}}</b> Recuperandose Hospitales.</button>
@@ -124,19 +123,19 @@
         <div class="card-body mt-2"> 
           <div class="form-group">
                     <h5 class="text-center">Seleccione el medio de contagio:</h5>
-                <select class="form-control" id="tcontagio" name="tcontagio" v-model="tcontagio" :onchange="getDatosContagio()">
-                        <option  v-for="tcontagio of tiposContagio" v-bind:value="tcontagio">{{tcontagio}}</option> 
+                <select class="form-control" id="tcontagio" name="tcontagio" v-model="tipoContagio" :onchange="totalTipoContagioCiudad()">
+                        <option  v-for="tipoContagio of tiposContagio" v-bind:value="tipoContagio">{{tipoContagio}}</option> 
                       </select>
                      
                 </div>
-                <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> En {{ciudad}} <b>{{totalCu}}</b> casos son tipo <b>{{tcontagio}}</b></button>
-                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{cantR}}</b> Recuperados.</button>
-                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{canRhospital}}</b> Recuperados en hospital.</button>
-                <button type="button" class="btn btn-danger btn-sm btn-block disabled"><i class="fa fa-plus"></i> <b>{{canFa}}</b> Fallecidos.</button>
-                <button type="button" class="btn btn-primary btn-sm btn-block disabled"><i class="fa fa-home"></i> <b>{{canRcasa}}</b> Recuperandose en casa.</button>
-                <button type="button" class="btn btn-info btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{canEnHospitala}}</b> Recuperandose en hospital.</button>
-                <button type="button" class="btn btn-warning btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{canUCI}}</b> En UCI [Unidad Cuidados Intensivos]</button>
-                <button type="button" class="btn btn-dark btn-sm btn-block disabled"><i class="fa fa-male"></i> <b>{{canHConta}}</b> hombres y <i class="fa fa-female"></i> <b>{{canMConta}}</b> mujeres.</button>
+                <button type="button" class="btn btn-light btn-lg btn-block disabled"><i class="fa fa-heartbeat"></i> En {{ciudad}} <b>{{totalTipoContagio}}</b> casos son tipo <b>{{tipoContagio}}</b></button>
+                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-child"></i> <b>{{tipoContagioRecuperados}}</b> Recuperados.</button>
+                <button type="button" class="btn btn-success btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{tipoContagioRecuperadosHospitales}}</b> Recuperados en hospital.</button>
+                <button type="button" class="btn btn-danger btn-sm btn-block disabled"><i class="fa fa-plus"></i> <b>{{tipoContagioFallecidos}}</b> Fallecidos.</button>
+                <button type="button" class="btn btn-primary btn-sm btn-block disabled"><i class="fa fa-home"></i> <b>{{tipoContagioCasa}}</b> Recuperandose en casa.</button>
+                <button type="button" class="btn btn-info btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{tipoContagioHospitales}}</b> Recuperandose en hospital.</button>
+                <button type="button" class="btn btn-warning btn-sm btn-block disabled"><i class="fa fa-hospital"></i> <b>{{tipoContagioHospitalesU}}</b> En UCI [Unidad Cuidados Intensivos]</button>
+                <button type="button" class="btn btn-dark btn-sm btn-block disabled"><i class="fa fa-male"></i> <b>{{tipoContagioHombres}}</b> hombres y <i class="fa fa-female"></i> <b>{{tipoContagioMujeres}}</b> mujeres.</button>
         </div>
 
           </div>
