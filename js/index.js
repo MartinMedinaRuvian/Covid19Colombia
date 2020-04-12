@@ -2,6 +2,7 @@ const app = new Vue({
   el: "#app",
 
   created() {
+  this.verFechaActual();
   this.getDatos();
   this.llenarEdades();
   },
