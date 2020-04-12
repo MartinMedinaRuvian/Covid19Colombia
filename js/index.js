@@ -90,7 +90,7 @@ const app = new Vue({
     verFechaActual() {
       let date = new Date();
       this.fechaActual =
-        date.getDate() + "/" + date.getMonth(+1) + "/" + date.getFullYear();
+         date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     },
 
      getCiudades() {
