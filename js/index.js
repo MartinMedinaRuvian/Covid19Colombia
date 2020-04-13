@@ -12,7 +12,7 @@ const app = new Vue({
     datos : [],
     titulo: "COVID19 EN COLOMBIA",
     tiempo: 0,
-    ciudad: "Cúcuta",
+    ciudad: "Cucuta",
     totalCasos: 0,
     numeroCasos: 0,
     ciudades: [],
