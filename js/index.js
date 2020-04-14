@@ -1,4 +1,4 @@
-const app = new Vue({
+new Vue({
   el: "#app",
 
   created() {
@@ -12,10 +12,10 @@ const app = new Vue({
     datos : [],
     titulo: "COVID19 EN COLOMBIA",
     tiempo: 0,
-    ciudad: '',
     totalCasos: 0,
     numeroCasos: 0,
-    ciudades: [],
+    ciudades: [],    
+    ciudad: '',
     numeroRecuperados: 0,
     numeroCasa: 0,
     numeroHospitales: 0,
@@ -90,7 +90,7 @@ const app = new Vue({
     verFechaActual() {
       let date = new Date();
       this.fechaActual =
-         date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     },
 
      getCiudades() {
@@ -101,6 +101,7 @@ const app = new Vue({
       this.ciudades = new Set(ciudades);
       this.ciudades = Array.from(this.ciudades);
       this.ciudades.sort();
+      this.ciudad =this.ciudades[0];
     },
 
    getTotalAtencion(conCiudad){
