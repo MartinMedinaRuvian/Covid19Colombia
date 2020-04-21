@@ -59,7 +59,8 @@ new Vue({
   },
 
   methods: {
-    async getDatos() {
+    
+      async getDatos() {
       const respuesta = await fetch(this.url_api);
       const datos = await respuesta.json(); 
       this.datos = await datos.data;
@@ -72,12 +73,19 @@ new Vue({
       this.totalCasosGenero(false);
       this.getTiposdeContagio();
       this.totalTipoContagioCiudad();
+      //this.getTest();
+    },
+
+   async getTest(){
+      for(let dato of this.datos){
+        console.log(dato);
+      }
     },
 
      getTotalCasosCiudad() {
       let total = 0;
       for (let dato of this.datos) {
-        if (dato[10] === this.ciudad) {
+        if (dato[11] === this.ciudad) {
           total++;
         }
       }
@@ -96,7 +104,7 @@ new Vue({
      getCiudades() {
       let ciudades = [];
       for (let dato of this.datos) {     
-        ciudades.push(dato[10]);     
+        ciudades.push(dato[11]);     
       }
       this.ciudades = new Set(ciudades);
       this.ciudades = Array.from(this.ciudades);
@@ -126,11 +134,11 @@ new Vue({
       let numeroCasoss = 0;
       for(let dato of this.datos){
           if(conCiudad){
-              if(dato[12] === atencion && dato[10] === this.ciudad){
+              if(dato[13] === atencion && dato[11] === this.ciudad){
                   numeroCasoss ++;
               }
           }else{
-              if(dato[12] === atencion){
+              if(dato[13] === atencion){
                   numeroCasoss ++;
               }
           }
@@ -151,11 +159,11 @@ new Vue({
 
       for(let dato of this.datos){
           if(conCiudad){
-              if(dato[10] === this.ciudad && dato[14] === genero){
+              if(dato[11] === this.ciudad && dato[15] === genero){
                total ++;
               }
           }else{
-            if(dato[14] === genero){
+            if(dato[15] === genero){
                 total++;
             }  
           }
@@ -173,7 +181,7 @@ new Vue({
       let total = 0;
 
       for(let dato of this.datos){
-          if(dato[13] == this.edad){
+          if(dato[14] == this.edad){
               total ++;
           }
       }
@@ -195,7 +203,7 @@ new Vue({
     getEdadyAtencion(atencion) {
       let total = 0;
       for(let dato of this.datos){
-          if(dato[12] === atencion && dato[13] == this.edad){
+          if(dato[13] === atencion && dato[14] == this.edad){
               total ++;
           }
       }
@@ -206,7 +214,7 @@ new Vue({
        let total = 0;
 
        for(let dato of this.datos){
-           if(dato[13] == this.edad && dato[14] === genero){
+           if(dato[14] == this.edad && dato[15] === genero){
             total ++;
            }
        }
@@ -215,7 +223,7 @@ new Vue({
      getTiposdeContagio() {
         let contagios = [];
         for(let dato of this.datos){
-            contagios.push(dato[15]);
+            contagios.push(dato[16]);
         }
         this.tiposContagio = new Set(contagios);
         this.tiposContagio = Array.from(this.tiposContagio);
@@ -225,7 +233,7 @@ new Vue({
        totalTipoContagioCiudad(){
           let total = 0;
           for(let dato of this.datos){
-              if(dato[15] == this.tipoContagio && dato[10]=== this.ciudad){
+              if(dato[16] == this.tipoContagio && dato[11]=== this.ciudad){
                   total++;
               }
           }
@@ -251,7 +259,7 @@ new Vue({
    getDatosContagioCiudad(atencion) {
        let total = 0;
        for(let dato of this.datos){
-            if(dato[15] == this.tipoContagio && dato[10]=== this.ciudad && dato[12] === atencion){
+            if(dato[16] == this.tipoContagio && dato[11]=== this.ciudad && dato[13] === atencion){
                 total ++;
             }       
        }
@@ -260,7 +268,7 @@ new Vue({
        getDatosContagioCiudadGenero(genero){
           let total = 0;
           for(let dato of this.datos){
-            if( dato[15] == this.tipoContagio && dato[10]=== this.ciudad && dato[14] === genero){
+            if( dato[16] == this.tipoContagio && dato[11]=== this.ciudad && dato[15] === genero){
                 total ++;
             }
           }
