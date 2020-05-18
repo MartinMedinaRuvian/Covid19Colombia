@@ -9,3 +9,5 @@ Ministerio de Salud de Colombia
 
 ## Realizada con:
 Vue js, HTML y Bootstrap
+
+https://martinmedinaruvian.github.io/Covid19Colombia/
